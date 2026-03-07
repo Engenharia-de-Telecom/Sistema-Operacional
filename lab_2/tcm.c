@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <dirent.h>
+#include <time.h>
 
 
 // man 3 cwd
@@ -27,7 +28,7 @@ int mymkdir(){
     scanf("%s", in);
 
     if(mkdir(in, 0700) != 0){
-        perror("mkdir( error\n)");
+        perror("mkdir() error\n)");
         return 1;
     }
     
@@ -41,7 +42,7 @@ int myrmdir(){
     scanf("%s", in);
 
     if(rmdir(in) != 0){
-        perror("rmdir( error\n)");
+        perror("rmdir() error\n)");
         return 1;
     }
     
@@ -52,13 +53,34 @@ int myrmdir(){
 int mycd(){
     char in[256];
     scanf("%s", in);
-    chdir(in);
+
+    if(chdir(in) != 0){
+        perror("cd() error\n");
+        return 1;
+    }
 
     return 0;
 }
 
 
 int mystat(){
+    char in[256];
+    struct stat info;
+    
+    scanf("%s", in);
+    if(stat(in, &info) != 0){
+        perror("stat() error\n");
+        return 1;
+    }
+
+    printf("Arquivo: %s\n", in);
+    printf("Tamanho: %ld bytes\n", info.st_size);
+    printf("Acesso: %s", ctime(&info.st_atime));
+    printf("Ultima modificação: %s", ctime(&info.st_mtime));
+
+
+
+    
     return 0;
 }
 
@@ -69,13 +91,14 @@ int myls(){
     DIR *d;
     //scanf("%s", in);
 
-    d = opendir(".");
+    d = opendir("."); // Usando ponto para sempre passar o diretório atual ficando mais parecido com o shell covencional
 
     if(d != NULL){
 
         while((dir = readdir(d)) != NULL){
             printf("%s/", dir->d_name); 
         }
+        printf("\n");
         closedir(d);
     } else{
         printf("Diretório %s não encontrado!\n", in);
@@ -90,12 +113,20 @@ int myls(){
 int main(int argc, char** argv){
 
     char in[256]; // Limitação de caracteres
-
+    char cwd[PATH_MAX];
     
+
     bool flag = true;
     while(flag){
 
-        printf("tcm:~");
+        getcwd(cwd, sizeof(cwd)); // Obtem todo o diretório
+        char *dir = strrchr(cwd, '/'); // Caminha pelo diretório até encontrar o ultimo '/' e aponta para ele
+
+        if(dir != NULL){
+            printf("\033[32mtcm:~%s>\033[0m ", dir + 1); // Quando ele apontar para a ultima barra, somamos 1 para o ponteiro apontar para a posição do diretório
+        } else {
+            printf("\033[32mtcm:~%s>\033[0m ", cwd); // Quando não tem barra, CWD armazena apenas o nome do único diretório
+        }
         scanf("%s", in);
         
         // Comparar a entrada com "exit"
@@ -114,7 +145,7 @@ int main(int argc, char** argv){
             mycd();
 
         } else if(strcmp(in, "mystat") == 0){
-            printf("Ainda não implementado!\n");
+            mystat();
 
         } else if(strcmp(in, "myls") == 0){
             myls();
