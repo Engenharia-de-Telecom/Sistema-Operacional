@@ -11,28 +11,23 @@
 #include <stdbool.h>
 #include <string.h>
 
-void encontra_ecomercial(char* entrada[], bool ecomercial){
-// Está função deve alterar o conteûdo da variável ecomercial para true, caso encontre "&" na entrada
-
-
-    
-}
 int main(int argc, char** argv){
     char entrada[256];
     int pid, status;
     while(true){
         printf("> ");
+
         fgets(entrada, 256, stdin);
-    
-        entrada[strlen(entrada) - 1] = '\0'; // substitui o quebra de linha pelo caracter nulo
+        entrada[strcspn(entrada, "\n")] = '\0'; // strcspn retorna o índice
 
         bool ecomercial = false;
         if(entrada[strlen(entrada) - 1] == '&'){ // verifica se '&' esta na entrada
             ecomercial = true;
             entrada[strlen(entrada) - 1] = '\0';
-            if((strlen(entrada) > 1) && (entrada[strlen(entrada) - 2] == ' ')){
-                entrada[strlen(entrada) - 2] = '\0';
-            }
+        }
+
+        while(strlen(entrada) > 0 && entrada[strlen(entrada) - 1]  == ' '){
+            entrada[strlen(entrada) - 1] = '\0';
         }
 
 
@@ -46,13 +41,14 @@ int main(int argc, char** argv){
 
         } else if(pid == 0){ // filho
             char *args[] = {entrada, NULL};
+            printf("Executando: [%s]\n", entrada);
             execve(entrada, args, NULL);
             perror("Erro");
             exit(1);
 
         } else{
             printf("%d\n", ecomercial);
-            if(ecomercial){
+            if(!ecomercial){
                 printf("Entrando no wait\n");
                 wait(&status);
         }
