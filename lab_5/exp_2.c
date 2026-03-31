@@ -11,7 +11,7 @@ int main() {
     execve("/bin/ls", args, NULL);
     } else {
     // Pai permanece ativo
-    printf("Processo pai PID = %d\n", getpid());
+    printf("\nProcesso pai PID = %d\n", getpid());
     sleep(30);
     }
     return 0;

@@ -11,7 +11,7 @@ int main() {
     sleep(30);
     } else {
     // Processo pai
-    printf("Sou o processo PAI. PID = %d, filho = %d\n", getpid(), pid);
+    printf("\nSou o processo PAI. PID = %d, filho = %d\n", getpid(), pid);
     sleep(30);
     }
     return 0;
