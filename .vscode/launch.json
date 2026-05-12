@@ -2,6 +2,48 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "ContaSemafaro",
+            "request": "launch",
+            "mainClass": "lab_coordenacao_2.exercicio2.ContaSemafaro",
+            "projectName": "Sistema-Operacional_5047973"
+        },
+        {
+            "type": "java",
+            "name": "ContaMutex",
+            "request": "launch",
+            "mainClass": "lab_coordenacao_2.exercicio2.ContaMutex",
+            "projectName": "Sistema-Operacional_5047973"
+        },
+        {
+            "type": "java",
+            "name": "ContadorSemafaro",
+            "request": "launch",
+            "mainClass": "lab_coordenacao_2.exercicio1.ContadorSemafaro",
+            "projectName": "Sistema-Operacional_5047973"
+        },
+        {
+            "type": "java",
+            "name": "Contador",
+            "request": "launch",
+            "mainClass": "lab_coordenacao_2.exercicio1.Contador",
+            "projectName": "Sistema-Operacional_5047973"
+        },
+        {
+            "type": "java",
+            "name": "Conta",
+            "request": "launch",
+            "mainClass": "lab_coordenacao_2.exercicio2.Conta",
+            "projectName": "Sistema-Operacional_5047973"
+        },
+        {
+            "type": "java",
+            "name": "RaceConditionDemo",
+            "request": "launch",
+            "mainClass": "lab_coordenacao_2.RaceConditionDemo",
+            "projectName": "Sistema-Operacional_5047973"
+        },
+        {
             "name": "Debug C",
             "type": "cppdbg",
             "request": "launch",
