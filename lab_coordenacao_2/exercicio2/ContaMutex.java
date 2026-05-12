@@ -1,4 +1,3 @@
-package lab_coordenacao_2.exercicio2;
 import java.util.concurrent.locks.*;
 
 public class ContaMutex {
